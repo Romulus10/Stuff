@@ -59,4 +59,5 @@ nbproject/private/*
 *.log
 *.lock
 *.class
+*.exe
 
