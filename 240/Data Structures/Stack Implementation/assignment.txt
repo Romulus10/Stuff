@@ -1,0 +1,96 @@
+/**
+ * Created by Sean Batzel on 2/6/2016.
+ */
+public class Stack<T> implements StackInterface<T>{
+    private int size;
+    private Node<T> lastIn;
+    public void push(T val){
+        if(size==0){
+            lastIn = new Node<T>();
+            lastIn.val = val;
+            lastIn.ref = null;
+            size++;
+        }
+        else{
+            Node save = lastIn;
+            lastIn = new Node<T>();
+            lastIn.val = val;
+            lastIn.ref = save;
+            size++;
+        }
+    }
+    public T pop(){
+        T value;
+        if (lastIn != null) {
+            value = lastIn.val;
+            lastIn = lastIn.ref;
+        }
+        else{
+            return null;
+        }
+        return value;
+    }
+    public void dumpstack(){
+        Node current = lastIn;
+        while (current != null){
+            System.out.println(current.val);
+            current = current.ref;
+        }
+    }
+}
+
+/**
+ * Created by Sean Batzel on 2/6/2016.
+ */
+public class Node<T> {
+    public T val;
+    public Node ref;
+    public Node(){
+        ref = null;
+    }
+}
+
+/**
+ * Created by Sean Batzel on 2/6/2016.
+ */
+public interface StackInterface<T> {
+    public void push(T val);
+    public T pop();
+    public void dumpstack();
+}
+
+/**
+ * Created by Sean Batzel on 2/6/2016.
+ */
+public class Main {
+    public static void main(String args[]){
+        Stack stack = new Stack();
+        stack.push(2);
+        stack.push(1);
+        stack.dumpstack();
+        stack.push(3);
+        stack.push(10);
+        stack.pop();
+        stack.push(15);
+        stack.dumpstack();
+        stack.pop();
+        stack.pop();
+        stack.dumpstack();
+        stack.pop();
+        stack.pop();
+        stack.pop();
+        stack.dumpstack();
+    }
+}
+
+// Output
+1
+2
+15
+3
+1
+2
+1
+2
+
+Process finished with exit code 0

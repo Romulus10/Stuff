@@ -5,6 +5,7 @@
 
 //IT ISN'T THE CONTROL FLOW
 //I THINK IT'S READING THE WRONG ARRAY TO DETERMINE HOW MANY NEIGHBORS WE HAVE
+//No, it's not even that. It was doing the neighbor thing then the "life" thing out of order.
 
 
 class GameOfLife {
