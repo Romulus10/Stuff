@@ -2,27 +2,32 @@ package batzel.life.gameoflife;
 
 /**
  * Sean Batzel 3/18/2016.
+ * Cleaned up Game Of Life Package
  */
 
 public class GameOfLife extends Thread{
     private boolean[][] one;
     private boolean[][] two;
     private int[][] neighbors;
+    private int dim1;
+    private int dim2;
 
-    public GameOfLife(boolean[][] world) {
+    public GameOfLife(boolean[][] world, int x, int y) {
         this.one = world;
         this.two = world;
-        this.neighbors = new int[20][20];
+        this.dim1 = x;
+        this.dim2 = y;
+        this.neighbors = new int[x][y];
     }
     
     public void theGameOfLife() {
-        for (int i = 1; i < 19; i++) {
-            for (int j = 1; j < 19; j++) {
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
                 this.neighbors[i][j] = neighborHoodOf(i, j);
             }
         }
-        for (int i = 1; i < 19; i++) {
-            for (int j = 1; j < 19; j++) {
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
                 this.two[i][j] = life(i, j);
             }
         }
@@ -65,8 +70,8 @@ public class GameOfLife extends Thread{
 
     public int findSurvivalRate(){
         int alive = 0;
-        for (int i = 1; i < 19; i++){
-            for (int j = 1; j < 19; j++){
+        for (int i = 1; i < this.dim1-1; i++){
+            for (int j = 1; j < this.dim2-1; j++){
                 if (this.one[i][j]){
                     alive++;
                 }
@@ -76,8 +81,8 @@ public class GameOfLife extends Thread{
     }
 
     public void printTheWorld() {
-        for (int i = 1; i < 19; i++) {
-            for (int j = 1; j < 19; j++) {
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
                 if (two[i][j]) {
                     System.out.print("X ");
                 } else {
