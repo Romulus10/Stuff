@@ -7,10 +7,10 @@ package batzel.life.gameoflife;
 
 public class GameOfLife extends Thread{
     private boolean[][] one;
-    private boolean[][] two;
-    private int[][] neighbors;
-    private int dim1;
-    private int dim2;
+    private final boolean[][] two;
+    private final int[][] neighbors;
+    private final int dim1;
+    private final int dim2;
 
     public GameOfLife(boolean[][] world, int x, int y) {
         this.one = world;
@@ -68,8 +68,8 @@ public class GameOfLife extends Thread{
         return near;
     }
 
-    public int findSurvivalRate(){
-        int alive = 0;
+    public float findSurvivalRate(){
+        float alive = 0;
         for (int i = 1; i < this.dim1-1; i++){
             for (int j = 1; j < this.dim2-1; j++){
                 if (this.one[i][j]){
