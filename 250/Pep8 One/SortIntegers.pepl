@@ -1,0 +1,177 @@
+-------------------------------------------------------------------------------
+      Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+-------------------------------------------------------------------------------
+             ; Sean Batzel
+             ; Assignment 4 CMPS 250
+             ;
+             ; SortIntegers.pep - Read,Print and Sort integers
+             ;
+             ; And we thought it was difficult to handle passing arrays as arguments in C...
+             ;
+             ; P.M.J., April 2016
+             ;---------------------------------------------------------------
+0000  04008A          BR      main        
+             ;---------------------------------------------------------------
+0003  0040   capacity:.WORD   64          ;the capacity of the array
+0005  0000   N:       .WORD   0           ;count of the number of integers
+0007  000000 A:       .BLOCK  128         ;the array of integers
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      000000 
+      0000   
+             ;--------
+0087  0000   ZERO:    .WORD   0           ;the input sentinel value
+0089  0A     NL:      .BYTE   '\n'        ;the "new line" character
+             ;---------------------------------------------------------------
+008A  24     main:    NOP0                
+008B  C10003          LDA     capacity,d  ;+ N = readInts(A,capacity);
+008E  E3FFFE          STA     -2,s        ;|
+0091  C00007          LDA     A,i         ;|
+0094  E3FFFC          STA     -4,s        ;|
+0097  680004          SUBSP   4,i         ;|
+009A  1600D0          CALL    readInts    ;|
+009D  600004          ADDSP   4,i         ;|
+00A0  E10005          STA     N,d         ;+
+             ;--------
+00A3  C10005          LDA     N,d         
+00A6  E3FFFE          STA     -2,s        
+00A9  C00007          LDA     A,i         
+00AC  E3FFFC          STA     -4,s        
+00AF  680004          SUBSP   4,i         
+00B2  16011B          CALL    sortInts    
+00B5  600004          ADDSP   4,i         
+             ;--------
+00B8  C10005          LDA     N,d         ;+ prntInts(A,N);
+00BB  E3FFFE          STA     -2,s        ;|
+00BE  C00007          LDA     A,i         ;|
+00C1  E3FFFC          STA     -4,s        ;|
+00C4  680004          SUBSP   4,i         ;|
+00C7  1600FA          CALL    prntInts    ;|
+00CA  600004          ADDSP   4,i         ;+
+             ;--------
+00CD  00              STOP                
+             ;-----------------------------------------------------------
+             ; int readInts(int array[], int capacity);
+             ;-----------------------------------------------------------
+             ia:      .EQUATE 2           
+             ic:      .EQUATE 4           
+             ;-----------------------------------------------------------
+00CE  0000   ivalue:  .BLOCK  2           ;local static variable
+00D0  24     readInts:NOP0                
+00D1  C80000          LDX     0,i         ; X = 0;
+00D4  BB0004 iloop:   CPX     ic,s        ;+ while(X < capacity) {
+00D7  0E00F1          BRGE    idone       ;|
+00DA  3100CE          DECI    ivalue,d    ;|   ivalue = nextInt();
+00DD  C100CE          LDA     ivalue,d    ;| + if(ivalue == ZERO) {
+00E0  B10087          CPA     ZERO,d      ;| |   EXIT while
+00E3  0A00F1          BREQ    idone       ;| + } else {
+00E6  1D              ASLX                ;| | + array[X] = ivalue;
+00E7  E70002          STA     ia,sxf      ;| | |
+             ; a is the address of the first byte in the array.
+             ; We then add the value in the x register to it.
+             ; f means deferred, which indicates that the prior address
+             ; will be used to store the result in memory.
+00EA  1F              ASRX                ;| | +
+00EB  780001          ADDX    1,i         ;| | + X = X + 1;
+             ;| + }
+00EE  0400D4          BR      iloop       ;+ }
+00F1  E900CE idone:   STX     ivalue,d    ;+ A = X;
+00F4  C100CE          LDA     ivalue,d    ;+
+00F7  58              RET0                
+             ;-----------------------------------------------------------
+             ; int prntInts(int array[], int n);
+             ;-----------------------------------------------------------
+             pa:      .EQUATE 2           
+             pn:      .EQUATE 4           
+00F8  0000   pvalue:  .BLOCK  2           
+00FA  24     prntInts:NOP0                
+00FB  C80000          LDX     0,i         
+00FE  BB0004 ploop:   CPX     pn,s        
+0101  0E0118          BRGE    pdone       
+0104  1D              ASLX                
+0105  C70002          LDA     pa,sxf      
+0108  E100F8          STA     pvalue,d    
+010B  3900F8          DECO    pvalue,d    
+010E  50000A          CHARO   '\n',i      
+0111  1F              ASRX                
+0112  780001          ADDX    1,i         
+0115  0400FE          BR      ploop       
+0118  58     pdone:   RET0                
+             ;-----------------------------------------------------------
+             ; int sortInts(int array[], int n);
+             ;-----------------------------------------------------------
+             ga:      .EQUATE 2           
+             gn:      .EQUATE 4           
+0119  0000   gvalue:  .BLOCK  2           
+011B  24     sortInts:NOP0                
+011C  C80000          LDX     0,i         
+011F  24     gloop:   NOP0                
+0120  BB0004          CPX     gn,s        
+0123  0E0138          BRGE    gdone       
+0126  C70002          LDA     ga,sxf      
+0129  E10119          STA     gvalue,d    
+012C  390119          DECO    gvalue,d    
+012F  510089          CHARO   NL,d        
+0132  780001          ADDX    1,i         
+0135  04011F          BR      gloop       
+0138  58     gdone:   RET0                
+0139                  .END                  
+-------------------------------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+A         0007         N         0005
+NL        0089         ZERO      0087
+capacity  0003         ga        0002
+gdone     0138         gloop     011F
+gn        0004         gvalue    0119
+ia        0002         ic        0004
+idone     00F1         iloop     00D4
+ivalue    00CE         main      008A
+pa        0002         pdone     0118
+ploop     00FE         pn        0004
+prntInts  00FA         pvalue    00F8
+readInts  00D0         sortInts  011B
+--------------------------------------

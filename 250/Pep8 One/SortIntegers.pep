@@ -26,6 +26,14 @@ main:    NOP0
          ADDSP   4,i         ;|
          STA     N,d         ;+
 ;--------
+         LDA     N,d         
+         STA     -2,s        
+         LDA     A,i         
+         STA     -4,s        
+         SUBSP   4,i         
+         CALL    sortInts
+         ADDSP   4,i
+;--------
          LDA     N,d         ;+ prntInts(A,N);
          STA     -2,s        ;|
          LDA     A,i         ;|
@@ -87,6 +95,33 @@ pdone:   RET0
 ;-----------------------------------------------------------
 ga:      .EQUATE 2
 gn:      .EQUATE 4
+tmp:     .BLOCK  2
+tmp2:    .BLOCK  2
 gvalue:  .BLOCK  2
-
+sortInts:NOP0                
+         LDX     0,i         
+gloop:   CPX     gn,s        
+         BRGE    gdone       
+         ASLX                
+         LDA     ga,sxf      
+         STA     gvalue,d 
+         ASLX                
+         LDA     ga,sxf      
+         CPA     gvalue,d
+         BRGT    greater
+back:    NOP0
+         ASRX     
+         ASRX           
+         ADDX    1,i         
+         BR      gloop       
+gdone:   RET0
+greater: STA     tmp,d
+         LDA     gvalue,d
+         STA     tmp2,d
+         LDA     tmp,d
+         STA     gvalue,d
+         LDA     tmp2,d
+         ASRX
+         STA     tmp2,d
+         BR      back
          .END                  

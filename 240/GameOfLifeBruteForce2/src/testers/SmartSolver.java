@@ -11,23 +11,24 @@ import static testers.BruteForce.*;
  */
 public class SmartSolver {
 
+    static float startcells;
+    
     public static void main(String args[]) {
         best = 0;
-        startcells = new float[10000000];
         int k = 0;
         int noChange = 0;
-        while (noChange < 100000) {
+        while (noChange < 10000000) {
             world = new boolean[20][20];
             world = makeworld();
             GameOfLife game = new GameOfLife(world, 20, 20);
-            startcells[k] = game.findSurvivalRate();
-            if (startcells[k] < 4) {
+            startcells = game.findSurvivalRate();
+            if (startcells < 4) {
                 continue;
             }
             for (int j = 0; j < 1000; j++) {
                 game.theGameOfLife();
             }
-            float current = (game.findSurvivalRate()/(2*startcells[k]));
+            float current = (game.findSurvivalRate()/(2*startcells));
             if (current > best) {
                 best = current;
                 now = world;
@@ -36,7 +37,9 @@ public class SmartSolver {
                 noChange = 0;
             }
             else noChange++;
-            if(noChange > 100000) System.err.println("LOOP CONDITION MET");
+            if(noChange > 10000000) {
+                die("LOOP CONDITION MET");
+            }
             k++;
         }
         System.out.println("Best fitness found: ");
@@ -51,5 +54,10 @@ public class SmartSolver {
             }
             System.out.println();
         }
+    }
+    
+    public static void die(String arg){
+        System.err.printf("%s\n", arg);
+        System.exit(0);
     }
 }
