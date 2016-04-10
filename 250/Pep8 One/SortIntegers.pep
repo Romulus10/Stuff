@@ -31,8 +31,8 @@ main:    NOP0
          LDA     A,i         
          STA     -4,s        
          SUBSP   4,i         
-         CALL    sortInts
-         ADDSP   4,i
+         CALL    sortInts    
+         ADDSP   4,i         
 ;--------
          LDA     N,d         ;+ prntInts(A,N);
          STA     -2,s        ;|
@@ -59,7 +59,7 @@ iloop:   CPX     ic,s        ;+ while(X < capacity) {
          CPA     ZERO,d      ;| |   EXIT while
          BREQ    idone       ;| + } else {
          ASLX                ;| | + array[X] = ivalue;
-         STA     ia,sxf      ;| | | 
+         STA     ia,sxf      ;| | |
 ; a is the address of the first byte in the array.
 ; We then add the value in the x register to it.
 ; f means deferred, which indicates that the prior address
@@ -93,31 +93,34 @@ pdone:   RET0
 ;-----------------------------------------------------------
 ; int sortInts(int array[], int n);
 ;-----------------------------------------------------------
-ga:      .EQUATE 2
-gn:      .EQUATE 4
-tmp:     .BLOCK  2
-tmp2:	 .BLOCK  2
-gvalue:  .BLOCK  2
+ga:      .EQUATE 2           
+gn:      .EQUATE 4           
+tmp:     .BLOCK  2           
+tmp2:    .BLOCK  2           
 sortInts:NOP0                
-         LDX     0,i
-gloop:	 CPX	 gn,s
-	 BRGE	 gend
-	 LDA	 ga,sxf
-	 STA	 tmp,d
-	 ASRX
-	 LDA	 ga,sxf
-	 STA	 tmp2,d
-	 CPA	 tmp,d
-	 ASLX
-	 BRLT	 less
-back:	 ADDX	 1,i
-	 BR	 gloop
-gend:	 RET0
-less:	 LDA	 tmp2,d
-	 STA	 gn,s
-	 ASRX
-	 LDA	 tmp,d
-	 STA	 gn,s
-	 ASLX
-	 BR	 back
+         LDX     0,i         
+gloop:   NOP0
+         CPX     gn,s        
+         BRGE    gend        
+         LDA     ga,sxf      
+         STA     tmp,d       
+         ASLX                
+         LDA     ga,sxf      
+         STA     tmp2,d      
+         ASRX
+         CPA     tmp,d
+         BRLE    less        
+back:    NOP0
+         ADDX    1,i         
+         BR      gloop       
+gend:    NOP0
+         RET0                
+less:    NOP0
+         LDA     tmp,d      
+         STA     ga,sxf    
+         ASLX                
+         LDA     tmp2,d       
+         STA     ga,sxf     
+         ASRX                
+         BR      back        
          .END                  
