@@ -1,5 +1,12 @@
-;Sarah Potter
-; 
+;Name: Sarah Potter
+;
+;Worked with: Matthew Woehle and Sean Batzel 
+;We all kind of brainstormed and tried to debug the code together once we got
+;to a point where our solution produced nearly-correct output. 
+;
+;Known issues: The output of this program strangely includes a zero and excludes the largest
+;integer. Other than that, it sorts the remaining integers correctly. 
+;
 ;SortIntegers.pep - Read,Print and Sort integers
 ;April 2016
 ;---------------------------------------------------------------
@@ -94,22 +101,22 @@ sloopi:	   LDA	1,i        ;"for loop" start
 	   STA	pos,d
 sloopii:   LDA	pos,d
 	   CPA	N,d
-	   BRGT	forout
+	   BRGE	forout     ;if(pos > N){leave the forloop} 
 	   LDX	pos,d
 	   ASLX
 	   LDA	A,x
-	   STA	val,d
+	   STA	val,d       ;val = A[pos*2]
 	   SUBX	2,i
-	   CPA	A,x
+	   CPA	A,x         ;if(A[pos*2] >= A[pos*2 - 2]){fornxt}
 	   BRGE	fornxt
 	   LDA	A,x
 	   ADDX	2,i
-	   STA	A,x
+	   STA	A,x          ;A[pos*2] = A[(pos+1)*2]
 	   SUBX	2,i
  	   LDA	val,d
 	   STA	A,x
 	   LDA	1,i
-	   STA	swappd,d
+	   STA	swappd,d     ;swappd = 1
 fornxt:	LDA	pos,d        ;next element
 	ADDA	1,i
 	STA	pos,d
