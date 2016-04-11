@@ -1,6 +1,7 @@
+;Sarah Potter
+; 
 ;SortIntegers.pep - Read,Print and Sort integers
-;
-; P.M.J., April 2016
+;April 2016
 ;---------------------------------------------------------------
          BR      main
 ;---------------------------------------------------------------
@@ -8,7 +9,8 @@ capacity:.WORD   64              ;the capacity of the array
 N:       .WORD   0               ;count of the number of integers
 A:       .BLOCK  128             ;the array of integers
 val:     .BLOCK  2               ;a placeholder for a value getting swapped
-swaps:   .BLOCK  2               ;number of swaps made in a pass through the array
+pos:     .BLOCK  2
+swappd:  .WORD   1               ;swaps in the array
 ZERO:    .WORD   0               ;the input sentinel value
 NL:      .BYTE   '\n'            ;the "new line" character
 ;---------------------------------------------------------------
@@ -83,46 +85,52 @@ pdone:     RET0
 ;-----------------------------------------------------------
 ; int sortInts(int array[], int n);
 ;-----------------------------------------------------------
-sortInts:  LDA        0,i
-           STA        val,d        ;val = 0; 
-           LDA        1,i
-           STA        swaps,d      ;swaps = 1; 
-           LDX        0,i          ;X = 0; 
-sloop:     NOP0                    
-           LDA        swaps,d
-           CPA        0,i
-           BREQ       sdone        ;if(swaps == 0){EXIT dowhile} 
-           LDA        0,i
-           STA        swaps,d      ;swaps = 0;      
-sloopi:    CPX        N,d     
-           BRGT       sloop        ;if(X > N){Go back to start of while loop b/c made a pass through the array} X IS NEVER GREATER THAN N
-           ASLX
-           LDA        A,x
-           STA        val,d 
-           ADDX       2,i 
-           LDA        A,x 
-           CPA        val,d        ;if(A[x+1] < A[x]){swap}
-           BRLT       swap
-           CPA        val,d        ;else{ /*A[x+1] >= A[x]*/ next}
-           ASRX
-           BR         sloopi       ;because 1 has been added to the index already, we just need to divide by 2 to get the index back
-swap:      NOP0
-           SUBX       2,i 
-           LDA        A,x
-           STA        val,d
-           ADDX       2,i 
-           LDA        A,x
-           SUBX       2,i 
-           STA        A,x         ;A[x] = A[x+1] 
-           ADDX       2,i 
-           LDA        val,d
-           STA        A,x         ;A[x+1] = val 
-           ASRX                   ;We're already at A[x+1], so we just need to shift right to divide by 2 to get our index
-           LDA        swaps,d
-           ADDA       1,i
-           STA        swaps,d
-           BR         sloopi
-sdone:     LDA        A,x
-           RET0
+sortInts:  LDA	swappd,d
+           CPA	0, i
+           BREQ	lpout
+sloop:	   LDA	0,i        ;"while" loop 
+	   STA	swappd, d
+sloopi:	   LDA	1,i        ;"for loop" start
+	   STA	pos,d
+sloopii:   LDA	pos,d
+	   CPA	N,d
+	   BRGT	forout
+	   LDX	pos,d
+	   ASLX
+	   LDA	A,x
+	   STA	val,d
+	   SUBX	2,i
+	   CPA	A,x
+	   BRGE	fornxt
+	   LDA	A,x
+	   ADDX	2,i
+	   STA	A,x
+	   SUBX	2,i
+ 	   LDA	val,d
+	   STA	A,x
+	   LDA	1,i
+	   STA	swappd,d
+fornxt:	LDA	pos,d        ;next element
+	ADDA	1,i
+	STA	pos,d
+	BR	sloopii
+forout:	BR	sortInts     ;leaves the for loop
+lpout:	LDX	0,i          ;out of the while loop
+sdone:  LDA     A,x
+        RET0
+
+;This is what I was basically trying to implement in pep8
+;do{
+;   int swaps = 0; 
+;   for(Int i = 0; i < array.length(); i++){
+;      if(array[i] <= array[i+1]{}
+;      else{//array[i] > array[i+1]
+;         int val = array[i]; 
+;         array[i] = array[i+1]; 
+;         array[i+1] = val; 
+;         swaps = swaps +1;
+;      }
+;    }
+;while(swaps != 0); 
 
         .END
