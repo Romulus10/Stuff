@@ -24,7 +24,6 @@ build/classes/*
 .idea/*
 .idea/.name/*
 .idea/.name
-dist/*
 manifest.mf
 nbproject/*
 nbproject/genfile.properties
