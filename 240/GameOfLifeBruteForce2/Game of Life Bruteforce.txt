@@ -1,0 +1,214 @@
+package testers;
+
+import batzel.life.gameoflife.GameOfLife;
+
+/**
+ * Sean Batzel
+ * 
+* Completely random aggressive mutation method Test for - Increasing fitness
+ * Termination Condition - Iterations WITHOUT increase of fitness.
+ */
+public class SmartSolver {
+
+    static float startcells;
+    static boolean[][] world;
+    static boolean[][] now;
+    static float best;
+    static float bestIteration;
+
+    public static void main(String args[]) {
+        best = 0;
+        int k = 0;
+        int noChange = 0;
+        while (noChange < 10000000) {
+            world = new boolean[20][20];
+            world = makeworld();
+            GameOfLife game = new GameOfLife(world, 20, 20);
+            startcells = game.findSurvivalRate();
+            if (startcells < 4) {
+                continue;
+            }
+            for (int j = 0; j < 1000; j++) {
+                game.theGameOfLife();
+            }
+            float current = (game.findSurvivalRate() / (2 * startcells));
+            if (current > best) {
+                best = current;
+                now = world;
+                bestIteration = k;
+                System.out.printf("Iteration %d: Fitness %f\n", k, best);
+                noChange = 0;
+            } else {
+                noChange++;
+            }
+            if (noChange > 10000000) {
+                die("LOOP CONDITION MET");
+            }
+            k++;
+        }
+        System.out.println("Best fitness found: ");
+        System.out.printf("\tIteration %f: Fitness %f\n", bestIteration, best);
+        for (int i = 1; i < 19; i++) {
+            for (int j = 1; j < 19; j++) {
+                if (now[i][j]) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("o ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void die(String arg) {
+        System.err.printf("%s\n", arg);
+        System.exit(0);
+    }
+
+    public static boolean[][] makeworld() {
+        boolean[][] retur = new boolean[20][20];
+        for (int x = 1; x < 19; x++) {
+            for (int y = 1; y < 19; y++) {
+                double check = Math.random();
+                retur[x][y] = check < .5;
+            }
+        }
+        return retur;
+    }
+}
+package batzel.life.gameoflife;
+
+/**
+ * Sean Batzel 3/18/2016.
+ * Cleaned up Game Of Life Package
+ */
+
+public class GameOfLife extends Thread{
+    private boolean[][] one;
+    private final boolean[][] two;
+    private final int[][] neighbors;
+    private final int dim1;
+    private final int dim2;
+
+    public GameOfLife(boolean[][] world, int x, int y) {
+        this.one = world;
+        this.two = world;
+        this.dim1 = x;
+        this.dim2 = y;
+        this.neighbors = new int[x][y];
+    }
+    
+    public void theGameOfLife() {
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
+                this.neighbors[i][j] = neighborHoodOf(i, j);
+            }
+        }
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
+                this.two[i][j] = life(i, j);
+            }
+        }
+        this.one = this.two;
+    }
+
+    private boolean life(int i, int j) {
+        if (this.one[i][j]) {
+            if (neighbors[i][j] <= 3 && neighbors[i][j] >= 2) {
+                return true;
+            } else if (neighbors[i][j] > 3 || neighbors[i][j] < 2) {
+                return false;
+            }
+        }
+        if (!this.one[i][j]) {
+            if (neighbors[i][j] == 3) {
+                return true;
+            } else
+                if (neighbors[i][j] != 3) {
+                    return false;
+                }
+        }
+        return false;
+    }
+
+    public int neighborHoodOf(int i, int j) {
+        int near = 0;
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (this.one[i + x][j + y]) {
+                    if (x == 0 && y == 0) {
+                    } else {
+                        near++;
+                    }
+                }
+            }
+        }
+        return near;
+    }
+
+    public float findSurvivalRate(){
+        float alive = 0;
+        for (int i = 1; i < this.dim1-1; i++){
+            for (int j = 1; j < this.dim2-1; j++){
+                if (this.one[i][j]){
+                    alive++;
+                }
+            }
+        }
+        return alive;
+    }
+
+    public void printTheWorld() {
+        for (int i = 1; i < this.dim1-1; i++) {
+            for (int j = 1; j < this.dim2-1; j++) {
+                if (two[i][j]) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("o ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}
+Iteration 0: Fitness 0.026144
+Iteration 1: Fitness 0.035032
+Iteration 3: Fitness 0.060897
+Iteration 9: Fitness 0.067742
+Iteration 13: Fitness 0.069079
+Iteration 14: Fitness 0.078947
+Iteration 20: Fitness 0.079470
+Iteration 34: Fitness 0.131429
+Iteration 191: Fitness 0.140351
+Iteration 288: Fitness 0.142857
+Iteration 1406: Fitness 0.145062
+Iteration 2374: Fitness 0.157576
+Iteration 2546: Fitness 0.168675
+Iteration 6159: Fitness 0.214286
+Iteration 9350: Fitness 0.239521
+Iteration 29586: Fitness 0.244898
+Iteration 45164: Fitness 0.261438
+Iteration 137526: Fitness 0.266667
+Iteration 454467: Fitness 0.292308
+Iteration 5336151: Fitness 0.294118
+Best fitness found: 
+	Iteration 5336151.000000: Fitness 0.294118
+o o o o o o o o o o o o o o o o o o 
+o o o X X o o o o o X X o o o o o o 
+o o o o X X o o o X X o o o o o o o 
+o X o o X o X o X o X o o X o o o o 
+o X X X o X X o X X o X X X o o o o 
+o o X o X o X o X o X o X o o o o o 
+o o o X X X o o o X X X o o o o o o 
+o o o o o o o o o o o o o o o o o o 
+o o o X X X o o o X X X o o o o o o 
+o o X o X o X o X o X o X o o o o o 
+o X X X o X X o X X o X X X o o o o 
+o X o o X o X o X o X o o X o o o o 
+o o o o X X o o o X X o o o o o o o 
+o o o X X o o o o o X X o o o o X X 
+o o o o o o o o o o o o o o o X o X 
+o o o o o o o o o o o o o o X o o X 
+o o o o o o o o o o o o o o o X X o 
+o o o o o o o o o o o o o o o o o o 
