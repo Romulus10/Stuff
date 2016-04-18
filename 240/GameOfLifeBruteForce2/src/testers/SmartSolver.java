@@ -4,9 +4,6 @@ import batzel.life.gameoflife.GameOfLife;
 
 /**
  * Sean Batzel
- * 
-* Completely random aggressive mutation method Test for - Increasing fitness
- * Termination Condition - Iterations WITHOUT increase of fitness.
  */
 public class SmartSolver {
 
