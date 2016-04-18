@@ -76,6 +76,7 @@ public class SmartSolver {
         return retur;
     }
 }
+
 package batzel.life.gameoflife;
 
 /**
@@ -172,6 +173,7 @@ public class GameOfLife extends Thread{
         System.out.println();
     }
 }
+
 Iteration 0: Fitness 0.026144
 Iteration 1: Fitness 0.035032
 Iteration 3: Fitness 0.060897

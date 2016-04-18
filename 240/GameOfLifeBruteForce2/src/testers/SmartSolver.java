@@ -13,6 +13,8 @@ public class SmartSolver {
     static float startcells;
     static boolean[][] world;
     static boolean[][] now;
+    static boolean[][] start;
+    static boolean[][] beststart;
     static float best;
     static float bestIteration;
 
@@ -23,6 +25,7 @@ public class SmartSolver {
         while (noChange < 10000000) {
             world = new boolean[20][20];
             world = makeworld();
+            start = world;
             GameOfLife game = new GameOfLife(world, 20, 20);
             startcells = game.findSurvivalRate();
             if (startcells < 4) {
@@ -36,6 +39,7 @@ public class SmartSolver {
                 best = current;
                 now = world;
                 bestIteration = k;
+                beststart = start;
                 System.out.printf("Iteration %d: Fitness %f\n", k, best);
                 noChange = 0;
             } else {
@@ -48,6 +52,18 @@ public class SmartSolver {
         }
         System.out.println("Best fitness found: ");
         System.out.printf("\tIteration %f: Fitness %f\n", bestIteration, best);
+        System.out.printf("\nStart:\n");
+        for (int i = 1; i < 19; i++) {
+            for (int j = 1; j < 19; j++) {
+                if (beststart[i][j]) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("o ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.printf("\nEnd:\n");
         for (int i = 1; i < 19; i++) {
             for (int j = 1; j < 19; j++) {
                 if (now[i][j]) {
