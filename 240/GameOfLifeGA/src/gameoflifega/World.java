@@ -1,13 +1,15 @@
 package gameoflifega;
 
 public class World {
-    private boolean[][] me;
-    
-    public World(boolean[][] otherme){
+
+    // A wrapper class to make handling arrays of worlds easier.
+    private boolean[][] me; // The boolean array wrapped by the object.
+
+    public World(boolean[][] otherme) {
         me = otherme;
     }
-    
-    public boolean[][] getWorld(){
+
+    public boolean[][] getWorld() {
         return me;
     }
 }
