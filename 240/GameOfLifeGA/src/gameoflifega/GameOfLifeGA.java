@@ -4,6 +4,7 @@ import batzel.life.gameoflife.GameOfLife;
 
 public class GameOfLifeGA {
 
+    static int ITERATIONS = 100000000;
     static GameOfLife life;
     static float[] fitnesses;
     static World[] worlds;
@@ -20,7 +21,7 @@ public class GameOfLifeGA {
         for (int i = 0; i < 20; i++) {
             worlds[i] = new World(makeworld());
         }
-        while (count < 100000000) {
+        while (count < ITERATIONS) {
             // Get the next set of fitnesses.
             gameOfLife();
             // Sort the results.
@@ -30,7 +31,7 @@ public class GameOfLifeGA {
             count++;
         }
         System.out.printf("Best fitness: %f\n", bestFitness);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             System.out.printf("Solution %d of 10, Fitness %f\n", i + 1, fitnesses[i]);
             for (int j = 0; j < 20; j++) {
                 for (int k = 0; k < 20; k++) {
@@ -44,6 +45,18 @@ public class GameOfLifeGA {
             }
             System.out.print("\n");
         }
+        System.out.printf("Solution 10 of 10 - BEST SOLUTION FOUND - Fitness %f\n", bestFitness);
+        for (int j = 0; j < 20; j++) {
+            for (int k = 0; k < 20; k++) {
+                if (bestWorld.getWorld()[j][k]) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("o ");
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
         System.out.println("Parent 1: ");
         for (int j = 0; j < 20; j++) {
             for (int k = 0; k < 20; k++) {
@@ -86,14 +99,18 @@ public class GameOfLifeGA {
         World[] tmp = new World[fitnesses.length];
         System.arraycopy(worlds, 0, tmp, 0, worlds.length);
         //Crossover
+        //Each of the 5 crossover worlds is the child of 2 of the top 5.
+        //e.g. 10's parents are 0 and 1, 11's parents are 1 and 2, etc.
+        //Each child takes cells from each parent with (0,0) to (9,9) being
+        //from the first parent and (10,10) to (19,19) being from the second.
         for (int i = 10; i < 15; i++) {
             boolean[][] tmp2 = tmp[i - 10].getWorld();
             parent1 = tmp[i - 10];
             boolean[][] tmp3 = tmp[i - 9].getWorld();
             parent2 = tmp[i - 9];
             boolean[][] tmp4 = tmp2;
-            for(int j = 10; j < 20; j++){
-                for(int k = 10; k < 20; k++){
+            for (int j = 10; j < 20; j++) {
+                for (int k = 10; k < 20; k++) {
                     tmp4[j][k] = tmp3[j][k];
                 }
             }
@@ -101,6 +118,7 @@ public class GameOfLifeGA {
             child = tmp[i];
         }
         //Mutation
+        //We're just going to NOT 15 random positions on the board.
         for (int i = 15; i < 20; i++) {
             World tmp2 = tmp[i];
             boolean[][] tmp3 = tmp2.getWorld();
