@@ -20,7 +20,7 @@ public class GameOfLifeGA {
         for (int i = 0; i < 20; i++) {
             worlds[i] = new World(makeworld());
         }
-        while (count < 100) {
+        while (count < 100000000) {
             // Get the next set of fitnesses.
             gameOfLife();
             // Sort the results.
