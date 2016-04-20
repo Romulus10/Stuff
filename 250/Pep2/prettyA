@@ -1,0 +1,2 @@
+java PrettyPrinter %1 > PEP.pep
+ls PEP.pep

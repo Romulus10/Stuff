@@ -1,0 +1,15 @@
+	br	main
+
+null:	.EQUATE	x00
+one:	.BLOCK	31
+two:	.BLOCK	31
+	.APPEND	"SCompTo.pep2"
+
+main:	NOP0
+loop:	STRI	one,d
+	STRI	two,d
+	LDA	one,dxf
+	CPA	null,d
+	BREQ	done
+done:	STOP
+	.END
