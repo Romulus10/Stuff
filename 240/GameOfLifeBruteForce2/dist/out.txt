@@ -1,18 +1,55 @@
-Iteration 0: Fitness 0.033113
-Iteration 1: Fitness 0.052486
-Iteration 2: Fitness 0.064417
-Iteration 5: Fitness 0.082840
-Iteration 14: Fitness 0.088235
-Iteration 119: Fitness 0.102410
-Iteration 207: Fitness 0.106509
-Iteration 238: Fitness 0.147436
-Iteration 722: Fitness 0.153061
-Iteration 1358: Fitness 0.158940
-Iteration 2309: Fitness 0.175000
-Iteration 7637: Fitness 0.248276
-Iteration 32187: Fitness 0.250000
-Iteration 116432: Fitness 0.255034
-Iteration 136591: Fitness 0.255319
-Iteration 218032: Fitness 0.259494
-Iteration 244299: Fitness 0.265823
-Iteration 253166: Fitness 0.283582
+Iteration 0: Fitness 0.064286
+Iteration 20: Fitness 0.073171
+Iteration 23: Fitness 0.090323
+Iteration 98: Fitness 0.092593
+Iteration 203: Fitness 0.094156
+Iteration 227: Fitness 0.098684
+Iteration 242: Fitness 0.103774
+Iteration 246: Fitness 0.108280
+Iteration 368: Fitness 0.156863
+Iteration 4727: Fitness 0.220859
+Iteration 6086: Fitness 0.258993
+Iteration 55285: Fitness 0.281250
+Iteration 4654247: Fitness 0.292593
+Best fitness found: 
+	Iteration 4654247.000000: Fitness 0.292593
+
+Start:
+o o o o o o o o o o o o o o o o o o 
+o o o o o o X X o o o o o X X o o o 
+o o o o o o o X X o o o X X o o o o 
+o o o o X o o X o X o X o X o o X o 
+o o o o X X X o X X o X X o X X X o 
+o o o o o X o X o X o X o X o X o o 
+o o o o o o X X X o o o X X X o o o 
+o o o o o o o o o o o o o o o o o o 
+o o o o o o X X X o o o X X X o o o 
+o o o o o X o X o X o X o X o X o o 
+o o o o X X X o X X o X X o X X X o 
+o o o o X o o X o X o X o X o o X o 
+o o o o o o o X X o o o X X o o o o 
+o o o o o o X X o o o o o X X o o o 
+o o X o o o o o o o o o o o o o o o 
+o X o X o o o o o o o o o o o o o o 
+o X o o X o o o o o o o o o o o o o 
+o o X X o o o o o o o o o o o o o o 
+
+End:
+o o o o o o o o o o o o o o o o o o 
+o o o o o o X X o o o o o X X o o o 
+o o o o o o o X X o o o X X o o o o 
+o o o o X o o X o X o X o X o o X o 
+o o o o X X X o X X o X X o X X X o 
+o o o o o X o X o X o X o X o X o o 
+o o o o o o X X X o o o X X X o o o 
+o o o o o o o o o o o o o o o o o o 
+o o o o o o X X X o o o X X X o o o 
+o o o o o X o X o X o X o X o X o o 
+o o o o X X X o X X o X X o X X X o 
+o o o o X o o X o X o X o X o o X o 
+o o o o o o o X X o o o X X o o o o 
+o o o o o o X X o o o o o X X o o o 
+o o X o o o o o o o o o o o o o o o 
+o X o X o o o o o o o o o o o o o o 
+o X o o X o o o o o o o o o o o o o 
+o o X X o o o o o o o o o o o o o o 
