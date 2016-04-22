@@ -1,15 +1,29 @@
 	br	main
 
-null:	.EQUATE	x00
-one:	.BLOCK	31
-two:	.BLOCK	31
+	.INCLUDE "PEP2.pep1"
 	.APPEND	"SCompTo.pep2"
 
+null:	.EQUATE	"\x00"
+	.BYTE	31
+one:	.BLOCK	31
+	.BYTE	31
+two:	.BLOCK	31
+aone:	.ADDRSS	one
+atwo:	.ADDRSS	two
+
 main:	NOP0
-loop:	STRI	one,d
-	STRI	two,d
+loop:	STRI	aone,d
+	STRI	atwo,d
 	LDA	one,dxf
 	CPA	null,d
 	BREQ	done
+	LDA	one,d
+	PUSHA
+	LDA	two,d
+	PUSHA
+	CALL	SCompTo
+	POP
+	POP 
+	BR	loop
 done:	STOP
 	.END

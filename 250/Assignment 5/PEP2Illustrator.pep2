@@ -1,0 +1,131 @@
+           BR       main
+           .INCLUDE "PEP2.pep1"
+title:     .ASCII   "PMJ's PEP2 Illustrator ...\n\x00"
+mDHB:      .ASCII   "DECOA,DECOX,HEXOA,HEXOX,BINOA,BINOX\n\x00"
+mCLRr:     .ASCII   "CLRA,CLRX\n\x00"
+mHEXBIN:   .ASCII   "HEXO,BINO\n\x00"
+mCLR:      .ASCII   "CLR\n\x00"
+mINCDECr:  .ASCII   "INCA,INCX,DECA,DECX\n\x00"
+mINCDEC:   .ASCII   "INC,DEC\n\x00"
+mNEGNOT:   .ASCII   "NEG,NOT\n\x00"
+mADDSUB:   .ASCII   "ADD,SUB\n\x00"
+mDUMPS:    .ASCII   "DUMPS\n\x00"
+mPP:       .ASCII   "PUSH,POP,PUSHA,POPA,PUSHX,POPX and DUMPS\n\x00"
+m:         .BLOCK   2
+           .BLOCK   2
+addend:    .WORD    23
+subtrnd:   .WORD    19
+ignore:    .BLOCK   2
+main:      STRO     title,d
+; Illustrate DECOA, DECOX, HEXOA, HEXOX, BINOA, BINOX
+           STRO     mDHB,d
+           LDA      17,i
+           CALL     ShowA
+           LDX      17,i
+           CALL     ShowX
+; Illustrate CLRA, CLRX
+           STRO     mCLRr,d
+           CLRA
+           CALL     ShowA
+           CLRX
+           CALL     ShowX
+; Illustrate HEXO, BINO
+           STRO     mHEXBIN,d
+           LDA      17,i
+           STA      m,d
+           CALL     Showm
+; Illustrate CLR
+           STRO     mCLR,d
+           CLR      m,d
+           CALL     Showm
+; Illustrate INCA, INCX, DECA, DECX
+           STRO     mINCDECr,d
+           CLRA
+           INCA
+           INCA
+           CALL     ShowA
+           CLRX
+           INCX
+           INCX
+           CALL     ShowX
+           DECA
+           CALL     ShowA
+           DECX
+           CALL     ShowX
+; Illustrate INC, DEC
+           STRO     mINCDEC,d
+           CLR      m,d
+           INC      m,d
+           INC      m,d
+           CALL     Showm
+           DEC      m,d
+           CALL     Showm
+; Illustrate NEG, NOT
+           STRO     mNEGNOT,d
+           LDA      17,i
+           STA      m,d
+           CALL     Showm
+           NEG      m,d
+           CALL     Showm
+           NOT      m,d
+           CALL     Showm    
+; Illustrate ADD, SUB
+           STRO     mADDSUB,d
+           ADD      m,d,addend,d
+           CALL     Showm
+           SUB      m,d,subtrnd,d
+           CALL     Showm
+; Illustrate DUMPS
+           STRO     mDUMPS,d
+           DUMPS    16,i
+; Illustrate PUSH,POP,PUSHA,POPA,PUSHX,POPX and DUMPS
+           STRO     mPP,d
+           PUSH     m,d
+           CALL     ShowD
+           POP      ignore,d
+           STOP
+
+
+
+TextA:     .ASCII   "A contains \x00"
+ShowA:     STRO     TextA,d
+           DECOA
+           CHARO    ',',i
+           HEXOA
+           CHARO    ',',i
+           BINOA
+           CHARO    '\n',i
+           RET0
+
+TextX:     .ASCII   "X contains \x00"
+ShowX:     STRO     TextX,d 
+           DECOX
+           CHARO    ',',i
+           HEXOX
+           CHARO    ',',i
+           BINOX
+           CHARO    '\n',i
+           RET0
+
+Textm:     .ASCII   "m contains \x00"
+Showm:     STRO     Textm,d 
+           DECO     m,d 
+           CHARO    ',',i
+           HEXO     m,d
+           CHARO    ',',i
+           BINO     m,d  
+           CHARO    '\n',i
+           RET0
+
+TextD:     .ASCII   "Inside subprogram\n\x00"
+ShowD:     STRO     TextD,d 
+           DUMPS    16,i
+           PUSHA
+           PUSHX    
+           DUMPS    16,i
+           POPA
+           POPX
+           DUMPS    16,i
+           RET0
+
+           .END

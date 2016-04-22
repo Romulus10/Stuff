@@ -27,7 +27,7 @@ loop:	   INCX
 	   SUBA	    hold2,d
 	   CPA	    0,i
 	   BRNE	    done
-	   CPA	    x00,i
+	   CPA	    "x00",i
 	   BREQ	    done
 done:      RESTOREX
 ;<<<<<<<<< Instrumentation
