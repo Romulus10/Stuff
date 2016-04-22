@@ -1,55 +1,17 @@
-Iteration 0: Fitness 0.064286
-Iteration 20: Fitness 0.073171
-Iteration 23: Fitness 0.090323
-Iteration 98: Fitness 0.092593
-Iteration 203: Fitness 0.094156
-Iteration 227: Fitness 0.098684
-Iteration 242: Fitness 0.103774
-Iteration 246: Fitness 0.108280
-Iteration 368: Fitness 0.156863
-Iteration 4727: Fitness 0.220859
-Iteration 6086: Fitness 0.258993
-Iteration 55285: Fitness 0.281250
-Iteration 4654247: Fitness 0.292593
-Best fitness found: 
-	Iteration 4654247.000000: Fitness 0.292593
-
-Start:
-o o o o o o o o o o o o o o o o o o 
-o o o o o o X X o o o o o X X o o o 
-o o o o o o o X X o o o X X o o o o 
-o o o o X o o X o X o X o X o o X o 
-o o o o X X X o X X o X X o X X X o 
-o o o o o X o X o X o X o X o X o o 
-o o o o o o X X X o o o X X X o o o 
-o o o o o o o o o o o o o o o o o o 
-o o o o o o X X X o o o X X X o o o 
-o o o o o X o X o X o X o X o X o o 
-o o o o X X X o X X o X X o X X X o 
-o o o o X o o X o X o X o X o o X o 
-o o o o o o o X X o o o X X o o o o 
-o o o o o o X X o o o o o X X o o o 
-o o X o o o o o o o o o o o o o o o 
-o X o X o o o o o o o o o o o o o o 
-o X o o X o o o o o o o o o o o o o 
-o o X X o o o o o o o o o o o o o o 
-
-End:
-o o o o o o o o o o o o o o o o o o 
-o o o o o o X X o o o o o X X o o o 
-o o o o o o o X X o o o X X o o o o 
-o o o o X o o X o X o X o X o o X o 
-o o o o X X X o X X o X X o X X X o 
-o o o o o X o X o X o X o X o X o o 
-o o o o o o X X X o o o X X X o o o 
-o o o o o o o o o o o o o o o o o o 
-o o o o o o X X X o o o X X X o o o 
-o o o o o X o X o X o X o X o X o o 
-o o o o X X X o X X o X X o X X X o 
-o o o o X o o X o X o X o X o o X o 
-o o o o o o o X X o o o X X o o o o 
-o o o o o o X X o o o o o X X o o o 
-o o X o o o o o o o o o o o o o o o 
-o X o X o o o o o o o o o o o o o o 
-o X o o X o o o o o o o o o o o o o 
-o o X X o o o o o o o o o o o o o o 
+Iteration 0: Fitness 0.038217
+Iteration 2: Fitness 0.039634
+Iteration 3: Fitness 0.040881
+Iteration 9: Fitness 0.045802
+Iteration 10: Fitness 0.049645
+Iteration 14: Fitness 0.050336
+Iteration 15: Fitness 0.053333
+Iteration 36: Fitness 0.057692
+Iteration 43: Fitness 0.082822
+Iteration 46: Fitness 0.085366
+Iteration 77: Fitness 0.172840
+Iteration 3163: Fitness 0.233766
+Iteration 9625: Fitness 0.238411
+Iteration 41484: Fitness 0.246753
+Iteration 47139: Fitness 0.255319
+Iteration 62306: Fitness 0.258278
+Iteration 109294: Fitness 0.267361
