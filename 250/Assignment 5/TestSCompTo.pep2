@@ -2,6 +2,8 @@
 
 	.INCLUDE "PEP2.pep1"
 	.APPEND	"SCompTo.pep2"
+	.APPEND  "readStgs.pep2"
+	.APPEND  "STRInput.pep1"
 
 null:	.EQUATE	"\x00"
 	.BYTE	31
