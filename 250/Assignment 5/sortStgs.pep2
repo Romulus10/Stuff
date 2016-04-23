@@ -11,7 +11,7 @@ temp:      .EQUATE  4
            .GLOBAL  sortStgs
 sortStgs:  SUBSP    6,i            ;   Reserve Space
 ;---------
-; S t u b b e d
+      
 ;---------
 done:      ADDSP    6,i            ;+ return
            RET0                    ;+

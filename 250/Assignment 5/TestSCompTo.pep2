@@ -1,4 +1,8 @@
-	br	main
+; Sean Batzel
+; TestSCompTo
+; Assignment 5 CMPS 250
+
+     br	main
 
 	.INCLUDE "PEP2.pep1"
 	.APPEND	"SCompTo.pep2"
@@ -14,7 +18,7 @@ aone:	.ADDRSS	one
 atwo:	.ADDRSS	two
 
 main:	NOP0
-loop:	STRI	aone,d
+loop: STRI	aone,d
 	STRI	atwo,d
 	LDA	one,dxf
 	CPA	null,d
@@ -24,6 +28,8 @@ loop:	STRI	aone,d
 	LDA	two,d
 	PUSHA
 	CALL	SCompTo
+	POP
+	POP
 	BR	loop
 done:	STOP
 	.END

@@ -1,5 +1,9 @@
+; Sean Batzel
+; SCompTo Implementation
+; Assignment 5 CMPS 250
+
 ;************************************************************************
-; String subprogram that compares two strings (Sobjects) and 
+; I String subprogram that compares two strings (Sobjects) and 
 ; returns a number less than zero if the first object is lexiographicall
 ; before (i.e. less than) the second, zero if they are equivalent, and a 
 ; positive number otherwise.
@@ -27,8 +31,11 @@ loop:	   INCX
 	   SUBA	    hold2,d
 	   CPA	    0,i
 	   BRNE	    done
-	   CPA	    "x00",i
-	   BREQ	    done
+	   LDA       hold2,d
+	   CPA       "x00",i
+	   BREQ      reset
+reset:     STA      0,i
+           BR       done
 done:      RESTOREX
 ;<<<<<<<<< Instrumentation
            CHARO    ',',i
