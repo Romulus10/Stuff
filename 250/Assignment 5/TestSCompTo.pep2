@@ -24,8 +24,6 @@ loop:	STRI	aone,d
 	LDA	two,d
 	PUSHA
 	CALL	SCompTo
-	POP
-	POP 
 	BR	loop
 done:	STOP
 	.END
