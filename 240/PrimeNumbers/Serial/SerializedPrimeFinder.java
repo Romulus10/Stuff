@@ -10,22 +10,21 @@ public class SerializedPrimeFinder{
 		int i = SRT;
 		int count = 0;
 		while(i < END){
-			System.out.print(i);
 			if(isPrime(i)){
-				System.out.print(" is prime!");
+				System.out.println(i);
 				count++;
 			}
 			i++;
-			System.out.print("\n");
 		}
-		System.out.printf("%d prime numbers found.", count);
+		System.out.printf("\n%d prime numbers found.\n", count);
 	}
 
-	private static boolean isPrime(int x){
-		int count = 2;
-		while(count < x){
-			if(x % count == 0 && count != x) return true;
-		}
-		return false;
+	private static boolean isPrime(int n) {
+    		if (n % 2 == 0) return false;
+    		for(int i = 3; i * i <=n; i += 2) {
+        		if(n % i == 0) return false;
+    		}
+    		return true;
 	}
+
 }
