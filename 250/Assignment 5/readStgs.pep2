@@ -1,7 +1,7 @@
 ;---------------------------------------------------------------
 ;  int readStgs(address p[], byte a[], int length, int limit)
 ;---------------------------------------------------------------
-p:         .EQUATE  2  
+p:         .EQUATE  2
 a:         .EQUATE  4
 length:    .EQUATE  6
 limit:     .EQUATE  8
@@ -45,7 +45,7 @@ move:      PUSH      value,i
            MOVE      disp,d,-4,s
            LDA       value,i
            DECA
-           STA       -6,s      
+           STA       -6,s
            SUBSP     6,i
            CALL      memcpy
            ADDSP     6,i

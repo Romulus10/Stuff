@@ -1,35 +1,41 @@
-; Sean Batzel
-; TestSCompTo
-; Assignment 5 CMPS 250
+;Sean Batzel
+;CMPS 250 Assignment 5
+;Developed in cooperation with Andrew Plaza
+;
+; P.M.J., April 2016
+;--------Includes-----------------------------------------------
+         BR        main
+         .INCLUDE  "PEP2.pep1"
+         .APPEND   "readStgs.pep2"
+         .APPEND   "memcpy.pep2"
+         .APPEND   "Slength.pep2"
+         .APPEND   "ScompTo.pep2"
+;------------local vars-----------------------------------------
+          .BYTE     16      ;beforebyte
+Name1:    .BLOCK    31      ;the name
+aName1:   .ADDRSS   Name1   ;address
+          .BYTE     16      ;same as above
+Name2:    .BLOCK    31
+aName2:   .ADDRSS   Name2
+result:   .BLOCK    2
+         CLRA
+         CLRX
+;------------------
 
-     br	main
+main:    NOP0
+loop:    STRI       aName1,d
+         STRI       aName2,d
+         LDBYTEA    Name1,d
+         CPA        "\x00",i
+         BREQ       done
+         LDA        aName2,d
+         PUSHA
+         LDA        aName1,d
+         PUSHA
+         CALL       ScompTo
+         ADDSP      4,i
+         BR         loop
 
-	.INCLUDE "PEP2.pep1"
-	.APPEND	"SCompTo.pep2"
-	.APPEND  "readStgs.pep2"
-	.APPEND  "STRInput.pep1"
 
-null:	.EQUATE	"\x00"
-	.BYTE	31
-one:	.BLOCK	31
-	.BYTE	31
-two:	.BLOCK	31
-aone:	.ADDRSS	one
-atwo:	.ADDRSS	two
-
-main:	NOP0
-loop: STRI	aone,d
-	STRI	atwo,d
-	LDA	one,dxf
-	CPA	null,d
-	BREQ	done
-	LDA	one,d
-	PUSHA
-	LDA	two,d
-	PUSHA
-	CALL	SCompTo
-	POP
-	POP
-	BR	loop
-done:	STOP
-	.END
+done:    STOP
+         .END

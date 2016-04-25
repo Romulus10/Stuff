@@ -1,11 +1,10 @@
-; Sean Batzel
-; SCompTo Implementation
-; Assignment 5 CMPS 250
-
+;Sean Batzel
+;Assignment 5 CMPS 250
+;
 ;************************************************************************
-; I String subprogram that compares two strings (Sobjects) and 
+; String subprogram that compares two strings (Sobjects) and
 ; returns a number less than zero if the first object is lexiographicall
-; before (i.e. less than) the second, zero if they are equivalent, and a 
+; before (i.e. less than) the second, zero if they are equivalent, and a
 ; positive number otherwise.
 ;
 ;********  int ScompTo (char[] Sobject1, char[] Sobject2)
@@ -15,6 +14,7 @@ Sobject1:  .EQUATE  2             ;formal parameter; address of Sobject
 Sobject2:  .EQUATE  4             ;formal parameter; address of Sobject
 ;-- Local Data ----------------------------------------------------------
 hold2:    .BLOCK    2
+
 ;-- Entry Point ---------------------------------------------------------
           .GLOBAL   ScompTo
 ScompTo:   SAVEX
@@ -22,24 +22,43 @@ ScompTo:   SAVEX
            STRO     Sobject1,sf
            CHARO    '-',i
            STRO     Sobject2,sf
+           CHARO    '\n',d
 ;>>>>>>>>>
            CLRA                   ;  A = 0;
-loop:	   INCX
-	   LDA	    SObject2,sxf
-	   STA	    hold2,d
-	   LDA	    SObject1,sxf
-	   SUBA	    hold2,d
-	   CPA	    0,i
-	   BRNE	    done
-	   LDA       hold2,d
-	   CPA       "x00",i
-	   BREQ      reset
-reset:     STA      0,i
-           BR       done
-done:      RESTOREX
+           CLRX
+;---------
+loop:       LDBYTEA     Sobject2,sxf
+            STA         hold2,d
+            LDBYTEA     Sobject1,sxf
+            CPA         hold2,d
+            BRNE        done1
+            CPA         0,i
+            BREQ        equal
+            INCX
+            BR          loop
+;---------
+done1:      SUBA        hold2,d
+            CPA         0,i
+            BRGT        greater
+            BRLT        less
+
+greater:    NOP0
+            LDA         1,i
+            BR          done
+
+less:       NOP0
+            LDA         -1,i
+            BR          done
+
+equal:      NOP0
+            LDA         0,i
+            BR          done
+
+done:       RESTOREX
+
 ;<<<<<<<<< Instrumentation
            CHARO    ',',i
            DECOA
            CHARO    '\n',i
 ;>>>>>>>>>
-           RET0                   ;
+           RET0                   ;	

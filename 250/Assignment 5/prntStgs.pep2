@@ -10,6 +10,16 @@ ptemp:     .BLOCK    2
            .GLOBAL   prntStgs
 prntStgs:  NOP0
 ;---------
-; S t u b b e d
-;--------
+         LDX     0,i         
+ploop:   CPX     p,s        
+         BRGE    done       
+         ASLX                
+         LDA     p,sxf      
+         STA     ptemp,d    
+         STRO    ptemp,d    
+         CHARO   '\n',i      
+         ASRX                
+         ADDX    1,i         
+         BR      ploop
+;---------
 done:      RET0
