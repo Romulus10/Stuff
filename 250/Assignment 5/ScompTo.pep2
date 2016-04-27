@@ -1,6 +1,7 @@
 ;Sean Batzel
 ;Assignment 5 CMPS 250
 ;
+;Worked with Andrew Plaza, Zach Black, Sarah Potter, Kyle Hassett
 ;************************************************************************
 ; String subprogram that compares two strings (Sobjects) and
 ; returns a number less than zero if the first object is lexiographicall

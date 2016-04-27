@@ -1,3 +1,8 @@
+;Zach Black Assignment 5
+;
+;Spring 2016
+;
+;Worked with Alex Pinarreta and Zach McGill
 ;---------------------------------------------------------------
 ;  int prntStgs(address p[], int n)
 ;---------------------------------------------------------------
@@ -7,19 +12,20 @@ n:         .EQUATE  4
 index:     .BLOCK    2
 ptemp:     .BLOCK    2
 ;---------------------------------------------------------------
+;Subprogram to print out array of Strings
+;---------------------------------------------------------------
            .GLOBAL   prntStgs
 prntStgs:  NOP0
-;---------
-         LDX     0,i         
-ploop:   CPX     p,s        
-         BRGE    done       
-         ASLX                
-         LDA     p,sxf      
-         STA     ptemp,d    
-         STRO    ptemp,d    
-         CHARO   '\n',i      
-         ASRX                
-         ADDX    1,i         
-         BR      ploop
-;---------
+           CLRX                       
+loop:      CPX      n,s      ;Compares the size of array
+           BRGE     done     ;Break when Greater than or equal to
+           ASLX
+           LDA      p,sxf    ;Loads address of array
+           ASRX              
+           STA      ptemp,d  ;Stores address of ptemp
+           DECO     ptemp,d  ;Prints string in that address
+           CHARO    '\n',i
+           ADDX     1,i      ;Adds 1 to n
+           BR       loop     ;Branchs back to loop 
+
 done:      RET0
