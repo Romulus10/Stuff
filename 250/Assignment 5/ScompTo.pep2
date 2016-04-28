@@ -1,7 +1,10 @@
+
+
 ;Sean Batzel
-;Assignment 5 CMPS 250
+;CMPS 250 Spring 2016
+;The following is a solution to Assignment 5
+;Collaborated with Andrew Plaza, Sarah Potter, Zach Black, Kyle Hassett
 ;
-;Worked with Andrew Plaza, Zach Black, Sarah Potter, Kyle Hassett
 ;************************************************************************
 ; String subprogram that compares two strings (Sobjects) and
 ; returns a number less than zero if the first object is lexiographicall
@@ -15,7 +18,6 @@ Sobject1:  .EQUATE  2             ;formal parameter; address of Sobject
 Sobject2:  .EQUATE  4             ;formal parameter; address of Sobject
 ;-- Local Data ----------------------------------------------------------
 hold2:    .BLOCK    2
-
 ;-- Entry Point ---------------------------------------------------------
           .GLOBAL   ScompTo
 ScompTo:   SAVEX
@@ -28,7 +30,8 @@ ScompTo:   SAVEX
            CLRA                   ;  A = 0;
            CLRX
 ;---------
-loop:       LDBYTEA     Sobject2,sxf
+loop:       NOP0
+            LDBYTEA     Sobject2,sxf
             STA         hold2,d
             LDBYTEA     Sobject1,sxf
             CPA         hold2,d
@@ -62,4 +65,24 @@ done:       RESTOREX
            DECOA
            CHARO    '\n',i
 ;>>>>>>>>>
-           RET0                   ;	
+           RET0                   ;
+
+;here's some code i was using to guide me
+;int compareString(char *firstString, char *secondString){
+;    if(firstString == NULL && secondString == NULL)
+;        return 0;
+;    int counter = 0;
+;    while(firstString[counter] == secondString[counter]){
+;        if(firstString[counter] == '\0' && secondString[counter] == '\0')
+;            return 0;
+;        counter++;
+;    }
+;    return firstString[counter] - secondString[counter];
+;}
+;
+;
+;
+;
+;
+;
+;
