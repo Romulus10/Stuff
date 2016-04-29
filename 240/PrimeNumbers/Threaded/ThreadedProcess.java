@@ -14,7 +14,9 @@ public class ThreadedProcess extends Thread{
 		int i = this.low;
 		while(i < this.high){
 			if(this.isPrime(i)){
-				System.out.println(i);
+				if(this.count < 3){
+					System.out.println(i);
+				}
 				this.count++;
 			}
 			i++;

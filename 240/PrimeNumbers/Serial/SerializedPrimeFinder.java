@@ -11,7 +11,9 @@ public class SerializedPrimeFinder{
 		int count = 0;
 		while(i < END){
 			if(isPrime(i)){
-				System.out.println(i);
+				if (count < 10){
+					System.out.println(i);
+				}
 				count++;
 			}
 			i++;
