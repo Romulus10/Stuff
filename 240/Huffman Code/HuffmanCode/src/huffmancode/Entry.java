@@ -3,14 +3,12 @@ package huffmancode;
 /**
  *
  * @author Sean Batzel
- * @param <K>
- * @param <V>
  */
-public class Entry<K,V>{
+public class Entry{
     char key;
-    StringBuffer value;
+    String value;
     Entry next;
-    public Entry(char key, StringBuffer value){
+    public Entry(char key, String value){
         this.key = key;
         this.value = value;
     }

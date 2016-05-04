@@ -1,7 +1,6 @@
 package huffmancode;
 
 // Sean Batzel
-// Huffman Code
 // I spent quite a bit of time researching how to get these to work. 
 // A binary search tree is *not* going to work. We need something a little more dynamic than that.
 /**
@@ -46,13 +45,19 @@ public class HuffmanCode {
          */
         if (tree instanceof HuffmanLeaf) {
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
-            System.out.println(leaf.value + "\t" + leaf.frequency + "\t" + stuff);
-            hash.add(leaf.value, stuff);
+            System.out.println(leaf.value + "\t" + leaf.frequency + "\t\t" + stuff);
+            // Okay. We know for a fact that leaf.value and stuff are the right values. Why aren't they making it to the dictionary?
+            String intermediate = stuff.toString();
+            //intermediate = intermediate.replaceFirst("^0+(?!$)", "");
+            //intermediate = StringUtilities.removeLeadingZeros(intermediate);
+            hash.add(leaf.value, intermediate);
+            //System.out.println(leaf.value + " " + stuff);
             //hash.printMap();
         } else if (tree instanceof HuffmanNode) { // Why did I never know instanceof was an actual keyword??? This is great!
-            HuffmanNode node = (HuffmanNode) tree;
+            HuffmanNode node = (HuffmanNode) tree; // Starting node traversal.
             stuff.append('0');
             printCodes(node.left, stuff);
+            //stuff.append('0');
             stuff.deleteCharAt(stuff.length() - 1); //Alright if I don't clean up the strings we end up with way too many 0's.
             stuff.append('1');
             printCodes(node.right, stuff);
@@ -61,7 +66,7 @@ public class HuffmanCode {
     }
 
     public static void main(String[] args) {
-        String[] strings = {"This", "That"};
+        String[] strings = {"The quick brown fox jumped over the lazy dog."};
         for (String x : strings) {
             hash = new Dictionary();
             System.out.print("\n");
@@ -72,15 +77,24 @@ public class HuffmanCode {
             }
             //System.out.println("about to build a tree yo");
             HuffmanTree tree = buildTree(letters);
-            System.out.println("SYMBOL\tWEIGHT\tHUFFMAN CODE");
+            System.out.println("SYMBOL\tFREQUENCY\tHUFFMAN CODE");
             printCodes(tree, new StringBuffer());
             System.out.print("\n");
             //System.out.println("I would while away the hours, confirmin' with the flowers, consultin' with the rain...");
-            hash.printMap();
+            //hash.printMap();
+            //System.out.print("\n");
             //System.out.println("In my head, I'd be scratchin' while my thoughts were busy hatchin' if I only had a brain!");
+            StringBuilder output = new StringBuilder();
             for (char c : input.toCharArray()) {
-                System.out.print(hash.get(c));
+                //System.out.println("Sit dooooooooooooooooooown");
+                output.append(hash.get(c));
             }
+            output.toString();
+            System.out.println("Original: ");
+            System.out.println(x);
+            System.out.print("\n");
+            System.out.println("Encoded: ");
+            System.out.println(output);
             //System.out.println("I dreamed last night I got on the boat to heaven, and by some chance I had brought my dice along!");
             System.out.print("\n");
         }

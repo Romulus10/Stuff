@@ -14,15 +14,15 @@ public class Dictionary {
         current = head;
     }
 
-    public void add(char key, StringBuffer value) {
+    public void add(char key, String value) {
         current.next = new Entry(key, value);
         current = current.next;
     }
 
-    public StringBuffer get(char key) {
-        System.out.println(key);
+    public String get(char key) {
+        //System.out.println(key);
         Entry tmp = head;
-        StringBuffer value = null;
+        String value = null;
         while (tmp.key != key) {
             tmp = tmp.next;
             try {
@@ -39,7 +39,13 @@ public class Dictionary {
         catch(NullPointerException e){
             //Don't do diddly squat.
         }
+        if(value != null){
         return value;
+        }
+        else{
+            value = "";
+            return value;
+        }
     }
 
     public void printMap() {
