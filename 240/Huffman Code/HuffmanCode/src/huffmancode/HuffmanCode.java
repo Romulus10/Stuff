@@ -44,7 +44,6 @@ public class HuffmanCode {
          * new string out of two concatenated strings every time I want to
          * change the existing string. This is really very convenient actually.
          */
-        hash = new Dictionary();
         if (tree instanceof HuffmanLeaf) {
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
             System.out.println(leaf.value + "\t" + leaf.frequency + "\t" + stuff);
@@ -64,6 +63,7 @@ public class HuffmanCode {
     public static void main(String[] args) {
         String[] strings = {"This", "That"};
         for (String x : strings) {
+            hash = new Dictionary();
             System.out.print("\n");
             String input = x;
             int[] letters = new int[256]; //Satisfies the "any string less than 256 characters" requirement.
