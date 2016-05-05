@@ -49,7 +49,7 @@ public class HuffmanCode {
             // Okay. We know for a fact that leaf.value and stuff are the right values. Why aren't they making it to the dictionary?
             String intermediate = stuff.toString();
             //intermediate = intermediate.replaceFirst("^0+(?!$)", "");
-            //intermediate = StringUtilities.removeLeadingZeros(intermediate);
+            intermediate = StringUtilities.removeLeadingZeros(intermediate);
             hash.add(leaf.value, intermediate);
             //System.out.println(leaf.value + " " + stuff);
             //hash.printMap();
@@ -92,9 +92,11 @@ public class HuffmanCode {
             output.toString();
             System.out.println("Original: ");
             System.out.println(x);
+            //System.out.println("Size: "+ x.length() * 8 + " bits.");
             System.out.print("\n");
             System.out.println("Encoded: ");
             System.out.println(output);
+            //System.out.println("Size: "+ x.length() + " bits.");
             //System.out.println("I dreamed last night I got on the boat to heaven, and by some chance I had brought my dice along!");
             System.out.print("\n");
         }

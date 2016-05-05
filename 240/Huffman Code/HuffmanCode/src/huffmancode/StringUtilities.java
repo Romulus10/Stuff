@@ -6,25 +6,25 @@
 package huffmancode;
 
 //I realize I'm probably reinventing the wheel but I wasn't really sure how to use existing utilities for this.
-
-import java.util.Arrays;
-
-
 /**
  *
  * @author Sean Batzel
  */
 public class StringUtilities {
-    public static String removeLeadingZeros(String x){
-        char[] z = x.toCharArray();
+
+    public static String removeLeadingZeros(String x) {
+        //System.out.println(x);
         int y = 0;
-        while (z[y] != 1){
-            if (z[y] == 0){
-                for (int i = y; i < z.length; i++){
-                    z[i] = z[i+1];
-                }
+        while (x.charAt(y) != 1 && y < x.length() - 2) {
+            //System.out.println(x.charAt(y));
+            if (x.charAt(y) == 0) {
+                x = x.replace(Character.toString(x.charAt(y)), "");
             }
+            if (x.charAt(y) == 1) {
+                break;
+            }
+            y++;
         }
-        return Arrays.toString(z);
+        return x;
     }
 }
