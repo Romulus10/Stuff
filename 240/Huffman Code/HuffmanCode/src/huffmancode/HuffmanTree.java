@@ -4,7 +4,7 @@ package huffmancode;
  *
  * @author Sean Batzel
  */
-public abstract class HuffmanTree implements Comparable<HuffmanTree> { // Abstract classes can be extended, but not instantiated? Alright.
+public abstract class HuffmanTree implements Comparable<HuffmanTree> {
 
     public final int frequency;
 
@@ -15,5 +15,5 @@ public abstract class HuffmanTree implements Comparable<HuffmanTree> { // Abstra
     @Override
     public int compareTo(HuffmanTree tree) {
         return frequency - tree.frequency;
-    } // Okay in order to use any kind of JVM-provided collection, this needs to implement Comparable apparently.
+    }
 }

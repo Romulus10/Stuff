@@ -3,8 +3,10 @@ package huffmancode;
 /**
  *
  * @author Sean Batzel
+ * @param <K>
+ * @param <V>
  */
-public class Dictionary {
+public class Dictionary<K, V> {
 
     Entry head;
     Entry current;
@@ -14,15 +16,15 @@ public class Dictionary {
         current = head;
     }
 
-    public void add(char key, String value) {
+    public void add(K key, V value) {
         current.next = new Entry(key, value);
         current = current.next;
     }
 
-    public String get(char key) {
+    public V get(K key) {
         //System.out.println(key);
         Entry tmp = head;
-        String value = null;
+        V value = null;
         while (tmp.key != key) {
             tmp = tmp.next;
             try {
@@ -33,30 +35,24 @@ public class Dictionary {
                 break;
             }
         }
-        try{
-            value = tmp.value;
+        try {
+            value = (V) tmp.value;
+        } catch (NullPointerException e) {
         }
-        catch(NullPointerException e){
-            //Don't do diddly squat.
-        }
-        if(value != null){
-        return value;
-        }
-        else{
-            value = "";
+        if (value != null) {
+            return value;
+        } else {
+            value = (V) "";
             return value;
         }
     }
 
     public void printMap() {
-        //System.out.println("Made it.");
-        //System.out.println("Someday I'll wish upon a star and wake up where the clouds are far behiiiiiiiiiiiind me");
         Entry tmp = head.next;
         while (tmp.next != null) {
             System.out.println(tmp.key + ": " + tmp.value);
             tmp = tmp.next;
         }
         System.out.println(tmp.key + ": " + tmp.value);
-        //System.out.println("Something has changed within me... Something is not the same...");
     }
 }

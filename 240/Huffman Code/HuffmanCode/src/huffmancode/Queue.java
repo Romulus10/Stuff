@@ -7,13 +7,11 @@ package huffmancode;
  */
 public class Queue<T> {
 
-    private Node<T> head; // Current front of the queue.
-    private Node<T> current; // The node we're currently adding to the end.
-    private int size; //Number of elements in the queue.
+    private Node<T> head;
+    private Node<T> current;
+    private int size;
 
     public void enqueue(T val) {
-        // Add a new node to the end of the queue.
-        // O(1) running time.
         if (size == 0) {
             head = new Node<>();
             current = new Node<>();
@@ -30,8 +28,6 @@ public class Queue<T> {
     }
 
     public T dequeue() {
-        // Remove and return the value at the front of the queue.
-        // O(1) running time.
         if (size != 0) {
             Node<T> temp;
             T tempVal;
@@ -46,10 +42,9 @@ public class Queue<T> {
     }
 
     public T look() {
-        try{
+        try {
             return head.ref.value;
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             return null;
         }
     }
