@@ -5,22 +5,23 @@ package huffmancode;
  * @author Sean Batzel I was having an issue where Dictionary.get() was not
  * retrieving "space" characters correctly. I dealt with it by having the
  * program substitute underscores for spaces, encoding the string that way. A
- * decoder would need to account for spaces being represented as underscores.
- * As of commit 6ddbabd, this works correctly, but not with an optimal Huffman tree.
+ * decoder would need to account for spaces being represented as underscores. As
+ * of 5/5/2016 at 21:40, this works correctly, but not with an optimal Huffman
+ * tree.
  */
 public class HuffmanCode {
 
     private static Dictionary<Character, String> hash;
 
     public static HuffmanTree buildTree(int[] letters) {
-        int[] iHopeThisWorks = BubbleSort.bubbleSort(letters);
         Queue<HuffmanTree> trees = new Queue<>();
         try {
             for (int i = 0; i < letters.length; i++) {
                 if (letters[i] > 0) {
-                    trees.enqueue(new HuffmanLeaf(iHopeThisWorks[i], ((char)i)));
+                    trees.enqueue(new HuffmanLeaf(letters[i], ((char) i)));
                 }
             }
+            assert trees.size() > 0;
             while (trees.size() > 1) {
                 HuffmanTree a = trees.dequeue();
                 HuffmanTree b = trees.dequeue();
@@ -33,9 +34,10 @@ public class HuffmanCode {
     }
 
     public static void printCodes(HuffmanTree tree, StringBuffer stuff) {
+        assert tree != null;
         if (tree instanceof HuffmanLeaf) {
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
-            System.out.println(leaf.value + "\t" + leaf.frequency + "\t\t" + stuff);
+            print(leaf.value + "\t" + leaf.frequency + "\t\t" + stuff);
             String intermediate = stuff.toString();
             intermediate = StringUtilities.removeLeadingZeros(intermediate);
             hash.add(leaf.value, intermediate);
@@ -65,38 +67,50 @@ public class HuffmanCode {
             }
             String fixed = wait.toString();
             hash = new Dictionary();
-            System.out.print("\n");
+            putchar("\n");
             String input = fixed;
             int[] letters = new int[256];
             for (char c : input.toCharArray()) {
                 letters[c]++;
             }
             HuffmanTree tree = buildTree(letters);
-            System.out.println("SYMBOL\tFREQUENCY\tHUFFMAN CODE");
+            print("SYMBOL\tFREQUENCY\tHUFFMAN CODE");
             printCodes(tree, new StringBuffer());
-            System.out.print("\n");
+            putchar("\n");
             StringBuilder output = new StringBuilder();
-            System.out.println("Original: ");
+            print("Original: ");
             for (int i = 0; i < input.length(); i++) {
                 if (input.charAt(i) == '_') {
-                    System.out.print(" ");
+                    putchar(" ");
                 } else {
-                    System.out.print(input.charAt(i));
+                    putchar(input.charAt(i));
                 }
             }
-            System.out.print("\n");
-            System.out.println("Size: " + input.length() * 8 + " bits.");
-            System.out.print("\n");
-            System.out.println("Encoded: ");
+            putchar("\n");
+            print("Size: " + (input.length() * 8) + " bits.");
+            putchar("\n");
+            print("Encoded: ");
             for (char c : input.toCharArray()) {
                 String as = hash.get(c);
-                System.out.print(as + " ");
+                putchar(as + " ");
                 output.append(as);
             }
-            System.out.print("\n");
+            putchar("\n");
             output.toString();
-            System.out.println("Binary String Length: " + output.length() + " bits.");
-            System.out.print("\n");
+            print("Binary String Length: " + output.length() + " bits.");
+            putchar("\n");
         }
+    }
+    
+    public static void print(String x){
+        System.out.println(x);
+    }
+    
+    public static void putchar(String x){
+        System.out.print(x);
+    }
+    
+    public static void putchar(char x){
+        System.out.print(x);
     }
 }

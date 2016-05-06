@@ -22,7 +22,6 @@ public class Dictionary<K, V> {
     }
 
     public V get(K key) {
-        //System.out.println(key);
         Entry tmp = head;
         V value = null;
         while (tmp.key != key) {
