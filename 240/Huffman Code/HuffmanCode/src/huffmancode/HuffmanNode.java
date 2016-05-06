@@ -8,9 +8,9 @@ public class HuffmanNode extends HuffmanTree {
 
     public final HuffmanTree left, right;
 
-    public HuffmanNode(HuffmanTree l, HuffmanTree r) {
-        super(l.frequency + r.frequency);
-        left = l;
-        right = r;
+    public HuffmanNode(HuffmanTree left, HuffmanTree right) {
+        super(left.frequency + right.frequency);
+        this.left = left;
+        this.right = right;
     }
 }

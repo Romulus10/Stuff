@@ -8,8 +8,8 @@ public class HuffmanLeaf extends HuffmanTree {
 
     public final char value;
 
-    public HuffmanLeaf(int freq, char val) {
-        super(freq);
-        value = val;
+    public HuffmanLeaf(int frequency, char value) {
+        super(frequency);
+        this.value = value;
     }
 }

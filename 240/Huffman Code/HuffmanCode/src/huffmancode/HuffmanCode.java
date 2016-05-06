@@ -8,32 +8,30 @@ package huffmancode;
  * decoder would need to account for spaces being represented as underscores. As
  * of 5/5/2016 at 21:40, this works correctly, but not with an optimal Huffman
  * tree.
+ * It's now 23:50, still not optimal.
+ * Very not optimal.
  */
 public class HuffmanCode {
 
     private static Dictionary<Character, String> hash;
 
     public static HuffmanTree buildTree(int[] letters) {
-        Queue<HuffmanTree> trees = new Queue<>();
-        try {
-            for (int i = 0; i < letters.length; i++) {
-                if (letters[i] > 0) {
-                    trees.enqueue(new HuffmanLeaf(letters[i], ((char) i)));
-                }
+        Queue<HuffmanTree> q = new Queue<>();
+        for (int i = 0; i < letters.length; i++) {
+            if (letters[i] > 0) {
+                q.enqueue(new HuffmanLeaf(letters[i], ((char) i)));
             }
-            assert trees.size() > 0;
-            while (trees.size() > 1) {
-                HuffmanTree a = trees.dequeue();
-                HuffmanTree b = trees.dequeue();
-                trees.enqueue(new HuffmanNode(a, b));
-            }
-            return trees.dequeue();
-        } catch (NullPointerException e) {
-            return null;
         }
+        assert q.size() > 0;
+        while (q.size() > 1) {
+            HuffmanTree one = q.dequeue();
+            HuffmanTree two = q.dequeue();
+            q.enqueue(new HuffmanNode(one, two));
+        }
+        return q.dequeue();
     }
 
-    public static void printCodes(HuffmanTree tree, StringBuffer stuff) {
+    public static void displayTree(HuffmanTree tree, StringBuffer stuff) {
         assert tree != null;
         if (tree instanceof HuffmanLeaf) {
             HuffmanLeaf leaf = (HuffmanLeaf) tree;
@@ -44,10 +42,10 @@ public class HuffmanCode {
         } else if (tree instanceof HuffmanNode) {
             HuffmanNode node = (HuffmanNode) tree;
             stuff.append('0');
-            printCodes(node.left, stuff);
+            displayTree(node.left, stuff);
             stuff.deleteCharAt(stuff.length() - 1);
             stuff.append('1');
-            printCodes(node.right, stuff);
+            displayTree(node.right, stuff);
             stuff.deleteCharAt(stuff.length() - 1);
         }
     }
@@ -75,7 +73,7 @@ public class HuffmanCode {
             }
             HuffmanTree tree = buildTree(letters);
             print("SYMBOL\tFREQUENCY\tHUFFMAN CODE");
-            printCodes(tree, new StringBuffer());
+            displayTree(tree, new StringBuffer());
             putchar("\n");
             StringBuilder output = new StringBuilder();
             print("Original: ");
@@ -101,16 +99,16 @@ public class HuffmanCode {
             putchar("\n");
         }
     }
-    
-    public static void print(String x){
+
+    public static void print(String x) {
         System.out.println(x);
     }
-    
-    public static void putchar(String x){
+
+    public static void putchar(String x) {
         System.out.print(x);
     }
-    
-    public static void putchar(char x){
+
+    public static void putchar(char x) {
         System.out.print(x);
     }
 }
