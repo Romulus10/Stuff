@@ -6,19 +6,19 @@ package huffmancode;
  * retrieving "space" characters correctly. I dealt with it by having the
  * program substitute underscores for spaces, encoding the string that way. A
  * decoder would need to account for spaces being represented as underscores.
+ * As of commit 6ddbabd, this works correctly, but not with an optimal Huffman tree.
  */
 public class HuffmanCode {
 
     private static Dictionary<Character, String> hash;
 
     public static HuffmanTree buildTree(int[] letters) {
-        DoubleArrayWrapper iHopeThisWorks = BubbleSort.bubbleSort(letters);
+        int[] iHopeThisWorks = BubbleSort.bubbleSort(letters);
         Queue<HuffmanTree> trees = new Queue<>();
         try {
             for (int i = 0; i < letters.length; i++) {
                 if (letters[i] > 0) {
-                    trees.enqueue(new HuffmanLeaf(iHopeThisWorks.getA()[i], iHopeThisWorks.getB()[i]));
-                    //trees.enqueue(new HuffmanLeaf(letters[i], (char) i));
+                    trees.enqueue(new HuffmanLeaf(iHopeThisWorks[i], ((char)i)));
                 }
             }
             while (trees.size() > 1) {

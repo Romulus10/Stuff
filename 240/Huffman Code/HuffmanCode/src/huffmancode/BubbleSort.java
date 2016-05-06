@@ -1,7 +1,5 @@
 package huffmancode;
 
-import java.util.Arrays;
-
 /**
  *
  * @author Sean Batzel
@@ -13,17 +11,16 @@ public class BubbleSort {
      * @param x
      * @return
      */
-    public static DoubleArrayWrapper bubbleSort(int[] x) {
+    public static int[] bubbleSort(int[] x) {
         int[] y = new int[x.length];
         char[] z = new char[x.length];
+        int[] g = new int[x.length];
         for (int i = 0; i < x.length; i++) {
             if (x[i] > 0) {
                 y[i] = x[i];
                 z[i] = ((char) i);
             }
         }
-        System.out.println(Arrays.toString(y));
-        System.out.println(Arrays.toString(z));
         @SuppressWarnings("UnusedAssignment")
         boolean swapped = false;
         do {
@@ -40,6 +37,9 @@ public class BubbleSort {
                 }
             }
         } while (swapped);
-        return new DoubleArrayWrapper(y, z);
+        for (int r = 0; r < x.length; r++){
+            g[z[r]] = y[r];
+        }
+        return g;
     }
 }
