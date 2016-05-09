@@ -8,7 +8,7 @@ struct node{
 
 char *readSO(){
 	char *string;
-	scanf("%s", string);
+	scanf("%s", &string);
 	return string;
 }
 
@@ -21,20 +21,25 @@ void prntLst(struct node *head){
 }
 
 struct node *buildLst(){
-	char *in = "";
+	char *in;
 	struct node *current;
 	struct node *head;
 	in = readSO();
 	head->next = malloc(sizeof(struct node));
 	current = head->next;
 	current->value = in;
-	while(in != "0"){
+	while(strcmp(in,"0") != 0){
 		in = readSO();
 		current->next = malloc(sizeof(struct node));
 		current = head->next;
 		current->value = in;
 	}
 	return head;
+}
+
+int die(char *msg, int code){
+	printf("ERROR CODE %d: %s", code, msg);
+	exit(code);
 }
 
 void main(){
