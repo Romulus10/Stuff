@@ -1,64 +1,14 @@
 ;---------------------------------------------------------------
-;  address readSO(address p[], byte a[], int length, int limit)
+;  Sean Batzel
+;  CMPS 250 Assignment 6
+;  address readSO()
 ;---------------------------------------------------------------
-p:         .EQUATE  2
-a:         .EQUATE  4
-length:    .EQUATE  6
-limit:     .EQUATE  8
-;--------
-           .BYTE     31
-value:     .BLOCK    31
-index:     .BLOCK    2
-disp:      .BLOCK    2
+adrss:     .ADDRSS   value
+value:     .BYTE     31
+           .BLOCK    31
 ;---------------------------------------------------------------
-msgtrunc:  .ASCII   "WARNING: input truncation \x00"
-msgfull:   .ASCII   "WARNING: Array full\x00"
-;---------------------------------------------------------------
-           .GLOBAL   readStgs
-readStgs:  NOP0
-           CLR       index,d
-loop:      CPM       index,d,limit,s
-           BRGE      full
-           STRI      value,i
-           TSTA
-           BREQ      move
-           STRO      msgtrunc,d
-           DECOA
-           CHARO     '\n',i
-move:      PUSH      value,i
-           CALL      Slength
-           ADDSP     2,i
-           TSTA
-           BREQ      done
-;---------
-           LDA       length,s
-           INCA
-           STA       -2,s
-           LDX       index,d
-           ASLX
-           ASLX
-           ASLX
-           ASLX
-           ASLX
-           STX       disp,d
-           ADD       disp,d,a,s
-           MOVE      disp,d,-4,s
-           LDA       value,i
-           DECA
-           STA       -6,s
-           SUBSP     6,i
-           CALL      memcpy
-           ADDSP     6,i
-;---------
-           INC       disp,d
-           LDX       index,d
-           ASLX
-           MOVE      disp,d,p,sxf
-;---------
-           INC       index,d
-           BR loop
-;--------
-full:      STRO      msgfull,d
-;--------
-done:      LDA       index,d
-           RET0
+           .GLOBAL   readSO
+readSO:    NOP0
+           STRI	     value,d
+           STA       adrss,n
+	   RET0

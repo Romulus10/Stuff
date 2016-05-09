@@ -1,0 +1,23 @@
+; Sean Batzel
+; Assignment 6 Main
+; CMPS 250
+; Subprogram references
+           .INCLUDE "HeapInit.pep1"
+           BR        main
+           .INCLUDE  "PEP2.pep1"
+           .APPEND   "readStgs.pep2"
+           .APPEND   "prntStgs.pep2"
+           .APPEND   "sortStgs.pep2"
+           .APPEND   "memcpy.pep2"
+           .APPEND   "Slength.pep2"
+           .APPEND   "ScompTo.pep2"
+           .APPEND   "Heap.pep1"
+; Memory assignments
+; Main
+main:      NOP0
+; Call buildStgs
+           CALL      buildStgs
+; Call prntStgs
+           CALL      prntStgs
+           STOP
+           .END
