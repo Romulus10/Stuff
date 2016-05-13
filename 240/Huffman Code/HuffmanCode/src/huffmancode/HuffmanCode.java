@@ -1,8 +1,14 @@
 package huffmancode;
 
+import java.util.PriorityQueue;
+
 /**
  *
- * @author Sean Batzel I was having an issue where Dictionary.get() was not
+ * @author Sean Batzel 
+ * 
+ * Resubmission
+ * 
+ * I was having an issue where Dictionary.get() was not
  * retrieving "space" characters correctly. I dealt with it by having the
  * program substitute underscores for spaces, encoding the string that way. A
  * decoder would need to account for spaces being represented as underscores. As
@@ -10,25 +16,30 @@ package huffmancode;
  * tree.
  * It's now 23:50, still not optimal.
  * Very not optimal.
+ * 
+ * Update - My initial research into this problem seemed to indicate that a
+ * priority queue was the best way to go for actually building the tree.
+ * It just occurred to me that my implementation of the queue was *not* 
+ * prioritized. That should solve the problem.
  */
 public class HuffmanCode {
 
     private static Dictionary<Character, String> hash;
 
     public static HuffmanTree buildTree(int[] letters) {
-        Queue<HuffmanTree> q = new Queue<>();
+        PriorityQueue<HuffmanTree> q = new PriorityQueue<>();
         for (int i = 0; i < letters.length; i++) {
             if (letters[i] > 0) {
-                q.enqueue(new HuffmanLeaf(letters[i], ((char) i)));
+                q.offer(new HuffmanLeaf(letters[i], ((char) i)));
             }
         }
         assert q.size() > 0;
         while (q.size() > 1) {
-            HuffmanTree one = q.dequeue();
-            HuffmanTree two = q.dequeue();
-            q.enqueue(new HuffmanNode(one, two));
+            HuffmanTree one = q.poll();
+            HuffmanTree two = q.poll();
+            q.offer(new HuffmanNode(one, two));
         }
-        return q.dequeue();
+        return q.poll();
     }
 
     public static void displayTree(HuffmanTree tree, StringBuffer stuff) {

@@ -13,11 +13,14 @@
            .APPEND   "ScompTo.pep2"
            .APPEND   "Heap.pep1"
 ; Memory assignments
+head:      .ADDRSS
 ; Main
 main:      NOP0
 ; Call buildStgs
            CALL      buildStgs
 ; Call prntStgs
+           PUSH      head,n
            CALL      prntStgs
+           ADDSP     2,i
            STOP
            .END

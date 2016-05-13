@@ -1,8 +1,14 @@
 package huffmancode;
 
+import java.util.PriorityQueue;
+
 /**
  *
- * @author Sean Batzel I was having an issue where Dictionary.get() was not
+ * @author Sean Batzel 
+ * 
+ * Resubmission
+ * 
+ * I was having an issue where Dictionary.get() was not
  * retrieving "space" characters correctly. I dealt with it by having the
  * program substitute underscores for spaces, encoding the string that way. A
  * decoder would need to account for spaces being represented as underscores. As
@@ -10,25 +16,30 @@ package huffmancode;
  * tree.
  * It's now 23:50, still not optimal.
  * Very not optimal.
+ * 
+ * Update - My initial research into this problem seemed to indicate that a
+ * priority queue was the best way to go for actually building the tree.
+ * It just occurred to me that my implementation of the queue was *not* 
+ * prioritized. That should solve the problem.
  */
 public class HuffmanCode {
 
     private static Dictionary<Character, String> hash;
 
     public static HuffmanTree buildTree(int[] letters) {
-        Queue<HuffmanTree> q = new Queue<>();
+        PriorityQueue<HuffmanTree> q = new PriorityQueue<>();
         for (int i = 0; i < letters.length; i++) {
             if (letters[i] > 0) {
-                q.enqueue(new HuffmanLeaf(letters[i], ((char) i)));
+                q.offer(new HuffmanLeaf(letters[i], ((char) i)));
             }
         }
         assert q.size() > 0;
         while (q.size() > 1) {
-            HuffmanTree one = q.dequeue();
-            HuffmanTree two = q.dequeue();
-            q.enqueue(new HuffmanNode(one, two));
+            HuffmanTree one = q.poll();
+            HuffmanTree two = q.poll();
+            q.offer(new HuffmanNode(one, two));
         }
-        return q.dequeue();
+        return q.poll();
     }
 
     public static void displayTree(HuffmanTree tree, StringBuffer stuff) {
@@ -119,101 +130,6 @@ package huffmancode;
  *
  * @author Sean Batzel
  */
-public class StringUtilities {
-
-    public static String removeLeadingZeros(String x) {
-        int y = 0;
-        while (x.charAt(y) != 1 && y < x.length() - 2) {
-            if (x.charAt(y) == 0) {
-                x = x.replace(Character.toString(x.charAt(y)), "");
-            }
-            if (x.charAt(y) == 1) {
-                break;
-            }
-            y++;
-        }
-        return x;
-    }
-}
-
-package huffmancode;
-
-/**
- *
- * @author Sean Batzel
- * @param <T>
- */
-public class Queue<T> {
-
-    private Node<T> head;
-    private Node<T> current;
-    private int size;
-
-    public void enqueue(T val) {
-        if (size == 0) {
-            head = new Node<>();
-            current = new Node<>();
-            head.ref = current;
-            current.value = val;
-            size++;
-        } else {
-            Node<T> temp = new Node<>();
-            current.ref = temp;
-            current = temp;
-            current.value = val;
-            size++;
-        }
-    }
-
-    public T dequeue() {
-        if (size != 0) {
-            Node<T> temp;
-            T tempVal;
-            temp = head.ref;
-            tempVal = temp.value;
-            head = head.ref;
-            size--;
-            return tempVal;
-        } else {
-            return null;
-        }
-    }
-
-    public T look() {
-        try {
-            return head.ref.value;
-        } catch (NullPointerException e) {
-            return null;
-        }
-    }
-
-    public int size() {
-        return size;
-    }
-}
-
-package huffmancode;
-
-/**
- *
- * @author Sean Batzel
- * @param <T>
- */
-public class Node<T> {
-
-    public T value;
-    public Node<T> ref;
-
-    public Node() {
-        this.ref = null;
-    }
-}
-package huffmancode;
-
-/**
- *
- * @author Sean Batzel
- */
 public abstract class HuffmanTree implements Comparable<HuffmanTree> {
 
     public final int frequency;
@@ -227,6 +143,7 @@ public abstract class HuffmanTree implements Comparable<HuffmanTree> {
         return frequency - tree.frequency;
     }
 }
+
 
 package huffmancode;
 
@@ -339,66 +256,89 @@ public class Entry<K, V> {
     }
 }
 
+package huffmancode;
+
+/**
+ *
+ * @author Sean Batzel
+ */
+public class StringUtilities {
+
+    public static String removeLeadingZeros(String x) {
+        int y = 0;
+        while (x.charAt(y) != 1 && y < x.length() - 2) {
+            if (x.charAt(y) == 0) {
+                x = x.replace(Character.toString(x.charAt(y)), "");
+            }
+            if (x.charAt(y) == 1) {
+                break;
+            }
+            y++;
+        }
+        return x;
+    }
+}
+
 run:
 
 SYMBOL	FREQUENCY	HUFFMAN CODE
-j	1		0000
-l	2		0001
-m	4		0010
-n	10		0011
-o	8		0100
-p	2		0101
-r	10		0110
-s	10		0111
-t	11		1000
-u	1		1001
-v	1		1010
-y	1		1011
-_	18		11000
-a	7		11001
-c	3		11010
-d	4		11011
-e	17		11100
-f	3		11101
-h	1		11110
-i	9		11111
+n	10		000
+t	11		001
+c	3		01000
+f	3		01001
+a	7		0101
+o	8		0110
+d	4		01110
+u	1		0111100
+v	1		0111101
+l	2		011111
+e	17		100
+i	9		1010
+m	4		10110
+p	2		101110
+y	1		1011110
+h	1		10111110
+j	1		10111111
+_	18		110
+s	10		1110
+r	10		1111
 
 Original: 
 just as fire tempers iron into fine steel so does adversity temper ones character into firmness tolerance and determination
 Size: 984 bits.
 
 Encoded: 
-0000 1001 0111 1000 11000 11001 0111 11000 11101 11111 0110 11100 11000 1000 11100 0010 0101 11100 0110 0111 11000 11111 0110 0100 0011 11000 11111 0011 1000 0100 11000 11101 11111 0011 11100 11000 0111 1000 11100 11100 0001 11000 0111 0100 11000 11011 0100 11100 0111 11000 11001 11011 1010 11100 0110 0111 11111 1000 1011 11000 1000 11100 0010 0101 11100 0110 11000 0100 0011 11100 0111 11000 11010 11110 11001 0110 11001 11010 1000 11100 0110 11000 11111 0011 1000 0100 11000 11101 11111 0110 0010 0011 11100 0111 0111 11000 1000 0100 0001 11100 0110 11001 0011 11010 11100 11000 11001 0011 11011 11000 11011 11100 1000 11100 0110 0010 11111 0011 11001 1000 11111 0100 0011 
-Binary String Length: 554 bits.
+10111111 0111100 1110 001 110 0101 1110 110 01001 1010 1111 100 110 001 100 10110 101110 100 1111 1110 110 1010 1111 0110 000 110 1010 000 001 0110 110 01001 1010 000 100 110 1110 001 100 100 011111 110 1110 0110 110 01110 0110 100 1110 110 0101 01110 0111101 100 1111 1110 1010 001 1011110 110 001 100 10110 101110 100 1111 110 0110 000 100 1110 110 01000 10111110 0101 1111 0101 01000 001 100 1111 110 1010 000 001 0110 110 01001 1010 1111 10110 000 100 1110 1110 110 001 0110 011111 100 1111 0101 000 01000 100 110 0101 000 01110 110 01110 100 001 100 1111 10110 1010 000 0101 001 1010 0110 000 
+Binary String Length: 475 bits.
 
 
 SYMBOL	FREQUENCY	HUFFMAN CODE
-g	3		0000
-h	2		0001
-i	5		0010
-l	2		0011
-m	3		0100
-n	6		0101
-o	7		0110
-p	1		0111
-r	1		1000
-s	6		1001
-t	7		1010
-u	1		1011
-y	1		1100
-_	15		11010
-a	7		11011
-b	1		11100
-c	1		11101
-d	3		11110
-e	12		11111
+_	15		00
+u	1		010000
+y	1		010001
+p	1		010010
+r	1		010011
+h	2		01010
+b	1		010110
+c	1		010111
+i	5		0110
+l	2		01110
+d	3		01111
+s	6		1000
+m	3		10010
+g	3		10011
+e	12		101
+n	6		1100
+o	7		1101
+t	7		1110
+a	7		1111
 
 Original: 
 someone is sitting in the shade today because someone planted a tree a long time ago
 Size: 672 bits.
 
 Encoded: 
-1001 0110 0100 11111 0110 0101 11111 11010 0010 1001 11010 1001 0010 1010 1010 0010 0101 0000 11010 0010 0101 11010 1010 0001 11111 11010 1001 0001 11011 11110 11111 11010 1010 0110 11110 11011 1100 11010 11100 11111 11101 11011 1011 1001 11111 11010 1001 0110 0100 11111 0110 0101 11111 11010 0111 0011 11011 0101 1010 11111 11110 11010 11011 11010 1010 1000 11111 11111 11010 11011 11010 0011 0110 0101 0000 11010 1010 0010 0100 11111 11010 11011 0000 0110 
-Binary String Length: 375 bits.
+1000 1101 10010 101 1101 1100 101 00 0110 1000 00 1000 0110 1110 1110 0110 1100 10011 00 0110 1100 00 1110 01010 101 00 1000 01010 1111 01111 101 00 1110 1101 01111 1111 010001 00 010110 101 010111 1111 010000 1000 101 00 1000 1101 10010 101 1101 1100 101 00 010010 01110 1111 1100 1110 101 01111 00 1111 00 1110 010011 101 101 00 1111 00 01110 1101 1100 10011 00 1110 0110 10010 101 00 1111 10011 1101 
+Binary String Length: 319 bits.
 
 BUILD SUCCESSFUL (total time: 0 seconds)
