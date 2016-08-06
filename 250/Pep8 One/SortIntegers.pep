@@ -60,7 +60,7 @@ iloop:   CPX     ic,s        ;+ while(X < capacity) {
          STA     ia,sxf      ;| | |
          ASRX                ;| | +
          ADDX    1,i         ;| | + X = X + 1;
-;| + }
+			     ;| + }
          BR      iloop       ;+ }
 idone:   STX     ivalue,d    ;+ A = X;
          LDA     ivalue,d    ;+
